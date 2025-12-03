@@ -23,9 +23,12 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
+<<<<<<< HEAD
   /**
    * Hash the password before saving
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   @column()
   get hashedPassword() {
     return this.password
@@ -35,9 +38,12 @@ export default class User extends BaseModel {
     this.password = hash.make(value)
   }
 
+<<<<<<< HEAD
   /**
    * Generate JWT token
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   generateToken(): string {
     return jwt.sign(
       { 
@@ -50,9 +56,12 @@ export default class User extends BaseModel {
     )
   }
 
+<<<<<<< HEAD
   /**
    * Verify JWT token
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   static verifyToken(token: string): any {
     try {
       return jwt.verify(token, env.get('APP_KEY'))
@@ -61,9 +70,12 @@ export default class User extends BaseModel {
     }
   }
 
+<<<<<<< HEAD
   /**
    * Verify the password
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   static async verifyCredentials(email: string, password: string) {
     const user = await this.findBy('email', email)
     if (!user) {

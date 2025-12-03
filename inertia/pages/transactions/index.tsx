@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
+<<<<<<< HEAD
 import { Head, Link, useForm, router } from '@inertiajs/react'
+=======
+import { Head, useForm, router } from '@inertiajs/react'
+>>>>>>> dfea00d (tambahkan)
 import Layout from '../../components/Layout'
 
 interface Transaction {
@@ -8,6 +12,10 @@ interface Transaction {
   tipe: 'masuk' | 'keluar'
   jumlah: number
   catatan?: string
+<<<<<<< HEAD
+=======
+  supplier_id?: number
+>>>>>>> dfea00d (tambahkan)
   created_at: string
   updated_at: string
   product: {
@@ -15,6 +23,16 @@ interface Transaction {
     nama: string
     merk?: string
   }
+<<<<<<< HEAD
+=======
+  supplier?: {
+    id: number
+    nama: string
+    alamat: string
+    telepon: string
+    email: string
+  }
+>>>>>>> dfea00d (tambahkan)
 }
 
 interface Product {
@@ -23,15 +41,33 @@ interface Product {
   merk?: string
 }
 
+<<<<<<< HEAD
+=======
+interface Supplier {
+  id: number
+  nama: string
+  alamat: string
+  telepon: string
+  email: string
+}
+
+>>>>>>> dfea00d (tambahkan)
 interface Props {
   transactions: {
     data: Transaction[]
     meta: any
   }
   products: Product[]
+<<<<<<< HEAD
 }
 
 export default function TransactionsIndex({ transactions, products }: Props) {
+=======
+  suppliers: Supplier[]
+}
+
+export default function TransactionsIndex({ transactions, products, suppliers }: Props) {
+>>>>>>> dfea00d (tambahkan)
   const [showModal, setShowModal] = useState(false)
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null)
   const [typeFilter, setTypeFilter] = useState<'all' | 'masuk' | 'keluar'>('all')
@@ -40,13 +76,21 @@ export default function TransactionsIndex({ transactions, products }: Props) {
     tipe: 'masuk' as 'masuk' | 'keluar',
     jumlah: 0,
     catatan: '',
+<<<<<<< HEAD
+=======
+    supplier_id: '',
+>>>>>>> dfea00d (tambahkan)
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
     if (editingTransaction) {
+<<<<<<< HEAD
       // Update existing transaction
+=======
+    
+>>>>>>> dfea00d (tambahkan)
       console.log('Updating transaction:', editingTransaction.id, 'with data:', data)
       put(`/api/transactions/${editingTransaction.id}`, {
         onSuccess: () => {
@@ -60,7 +104,11 @@ export default function TransactionsIndex({ transactions, products }: Props) {
         }
       })
     } else {
+<<<<<<< HEAD
       // Create new transaction
+=======
+    
+>>>>>>> dfea00d (tambahkan)
       console.log('Creating new transaction with data:', data)
       post('/api/transactions', {
         onSuccess: () => {
@@ -89,6 +137,10 @@ export default function TransactionsIndex({ transactions, products }: Props) {
       tipe: transaction.tipe,
       jumlah: transaction.jumlah,
       catatan: transaction.catatan || '',
+<<<<<<< HEAD
+=======
+      supplier_id: transaction.supplier_id?.toString() || '',
+>>>>>>> dfea00d (tambahkan)
     })
     setShowModal(true)
   }
@@ -109,7 +161,10 @@ export default function TransactionsIndex({ transactions, products }: Props) {
       <Head title="Transactions" />
       <Layout title="Transactions">
         <div className="space-y-6">
+<<<<<<< HEAD
           {/* Header */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-gray-900">Transactions</h2>
             <button
@@ -120,7 +175,10 @@ export default function TransactionsIndex({ transactions, products }: Props) {
             </button>
           </div>
 
+<<<<<<< HEAD
           {/* Filters */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="flex space-x-4">
             <select
               value={typeFilter}
@@ -133,7 +191,10 @@ export default function TransactionsIndex({ transactions, products }: Props) {
             </select>
           </div>
 
+<<<<<<< HEAD
           {/* Transactions Table */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
             <ul className="divide-y divide-gray-200">
               {filteredTransactions.map((transaction) => (
@@ -156,6 +217,14 @@ export default function TransactionsIndex({ transactions, products }: Props) {
                           <p className="text-sm text-gray-500">
                             Quantity: {transaction.jumlah}
                           </p>
+<<<<<<< HEAD
+=======
+                          {transaction.supplier && (
+                            <p className="text-sm text-gray-500">
+                              Supplier: {transaction.supplier.nama}
+                            </p>
+                          )}
+>>>>>>> dfea00d (tambahkan)
                           {transaction.catatan && (
                             <p className="text-sm text-gray-500">
                               Note: {transaction.catatan}
@@ -194,7 +263,10 @@ export default function TransactionsIndex({ transactions, products }: Props) {
             </ul>
           </div>
 
+<<<<<<< HEAD
           {/* Empty State */}
+=======
+>>>>>>> dfea00d (tambahkan)
           {filteredTransactions.length === 0 && (
             <div className="text-center py-12">
               <span className="text-6xl">📋</span>
@@ -216,7 +288,10 @@ export default function TransactionsIndex({ transactions, products }: Props) {
           )}
         </div>
 
+<<<<<<< HEAD
         {/* Add Transaction Modal */}
+=======
+>>>>>>> dfea00d (tambahkan)
         {showModal && (
           <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -266,6 +341,29 @@ export default function TransactionsIndex({ transactions, products }: Props) {
                       </div>
 
                       <div>
+<<<<<<< HEAD
+=======
+                        <label htmlFor="supplier_id" className="block text-sm font-medium text-gray-700">
+                          Supplier
+                        </label>
+                        <select
+                          id="supplier_id"
+                          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          value={data.supplier_id}
+                          onChange={(e) => setData('supplier_id', e.target.value)}
+                        >
+                          <option value="">Pilih Supplier</option>
+                          {suppliers.map((supplier) => (
+                            <option key={supplier.id} value={supplier.id}>
+                              {supplier.nama}
+                            </option>
+                          ))}
+                        </select>
+                        {errors.supplier_id && <p className="text-red-500 text-sm mt-1">{errors.supplier_id}</p>}
+                      </div>
+
+                      <div>
+>>>>>>> dfea00d (tambahkan)
                         <label htmlFor="jumlah" className="block text-sm font-medium text-gray-700">
                           Quantity *
                         </label>

@@ -5,7 +5,10 @@ import Transaction from '#models/transaction'
 
 export default class extends BaseSeeder {
   async run() {
+<<<<<<< HEAD
     // Create sample categories
+=======
+>>>>>>> dfea00d (tambahkan)
     const electronics = await Category.firstOrCreate(
       { nama: 'Electronics' },
       { nama: 'Electronics' }
@@ -21,7 +24,11 @@ export default class extends BaseSeeder {
       { nama: 'Books' }
     )
     
+<<<<<<< HEAD
     // Create sample products
+=======
+
+>>>>>>> dfea00d (tambahkan)
     const laptop = await Product.firstOrCreate(
       { nama: 'MacBook Pro' },
       {
@@ -66,7 +73,10 @@ export default class extends BaseSeeder {
       }
     )
     
+<<<<<<< HEAD
     // Create sample transactions
+=======
+>>>>>>> dfea00d (tambahkan)
     await Transaction.firstOrCreate(
       { 
         produk_id: laptop.id,

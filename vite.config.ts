@@ -7,10 +7,13 @@ import adonisjs from '@adonisjs/vite/client'
 export default defineConfig({
   plugins: [inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.tsx' } }), react(), adonisjs({ entrypoints: ['inertia/app/app.tsx'], reload: ['resources/views/**/*.edge'] })],
 
+<<<<<<< HEAD
   /**
    * Define aliases for importing modules from
    * your frontend code
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   resolve: {
     alias: {
       '~/': `${getDirname(import.meta.url)}/inertia/`,

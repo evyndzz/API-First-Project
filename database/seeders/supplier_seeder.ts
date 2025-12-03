@@ -3,7 +3,11 @@ import Supplier from '#models/supplier'
 
 export default class extends BaseSeeder {
   async run() {
+<<<<<<< HEAD
     // Sample suppliers data
+=======
+
+>>>>>>> dfea00d (tambahkan)
     const suppliersData = [
       {
         nama: 'PT. Tech Solutions Indonesia',
@@ -31,7 +35,11 @@ export default class extends BaseSeeder {
       }
     ]
 
+<<<<<<< HEAD
     // Check if suppliers already exist
+=======
+
+>>>>>>> dfea00d (tambahkan)
     const existingSuppliers = await Supplier.query().count('* as total')
     
     if (existingSuppliers[0].total === 0) {

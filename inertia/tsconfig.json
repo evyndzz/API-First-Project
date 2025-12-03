@@ -7,6 +7,10 @@
     "paths": {
       "~/*": ["./*"],
     },
+<<<<<<< HEAD
+=======
+    "ignoreDeprecations": "6.0"
+>>>>>>> dfea00d (tambahkan)
   },
   "include": ["./**/*.ts", "./**/*.tsx"],
 }

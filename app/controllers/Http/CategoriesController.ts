@@ -2,9 +2,12 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Category from '#models/kategori'
 
 export default class CategoriesController {
+<<<<<<< HEAD
   /**
    * Display a list of categories with their products
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   async index({ request }: HttpContext) {
     const page = request.input('page', 1)
     const limit = request.input('limit', 10)
@@ -14,6 +17,7 @@ export default class CategoriesController {
       .paginate(page, limit)
   }
 
+<<<<<<< HEAD
   /**
    * Store a new category
    */
@@ -21,6 +25,11 @@ export default class CategoriesController {
     const data = request.only(['nama'])
     
     // Validate required fields
+=======
+  async store({ request }: HttpContext) {
+    const data = request.only(['nama'])
+
+>>>>>>> dfea00d (tambahkan)
     if (!data.nama) {
       return { error: 'Nama kategori harus diisi' }
     }
@@ -29,9 +38,12 @@ export default class CategoriesController {
     return category
   }
 
+<<<<<<< HEAD
   /**
    * Show individual category with its products
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   async show({ params }: HttpContext) {
     const category = await Category.query()
       .where('id', params.id)
@@ -41,9 +53,12 @@ export default class CategoriesController {
     return category
   }
 
+<<<<<<< HEAD
   /**
    * Update existing category
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   async update({ params, request }: HttpContext) {
     const category = await Category.findOrFail(params.id)
     const data = request.only(['nama'])
@@ -54,6 +69,7 @@ export default class CategoriesController {
     return category
   }
 
+<<<<<<< HEAD
   /**
    * Delete category
    */
@@ -74,6 +90,17 @@ export default class CategoriesController {
   /**
    * Get category statistics
    */
+=======
+  async destroy({ params }: HttpContext) {
+    const category = await Category.findOrFail(params.id)
+    const productCount = await category.related('products').query().count('* as total')
+    if (productCount[0].total > 0) {
+      return { error: 'Tidak dapat menghapus kategori yang masih memiliki produk' }
+    }
+    await category.delete()
+    return { message: 'Kategori berhasil dihapus' }
+  }
+>>>>>>> dfea00d (tambahkan)
   async stats({ params }: HttpContext) {
     const category = await Category.findOrFail(params.id)
     const products = await category.related('products').query()
@@ -94,9 +121,12 @@ export default class CategoriesController {
     }
   }
 
+<<<<<<< HEAD
   /**
    * Search categories by name
    */
+=======
+>>>>>>> dfea00d (tambahkan)
   async search({ request }: HttpContext) {
     const searchTerm = request.input('search', '')
     const page = request.input('page', 1)

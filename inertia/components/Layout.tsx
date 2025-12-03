@@ -19,7 +19,10 @@ export default function Layout({ children, title }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+<<<<<<< HEAD
       {/* Mobile sidebar */}
+=======
+>>>>>>> dfea00d (tambahkan)
       <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? 'block' : 'hidden'}`}>
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
         <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white">
@@ -47,7 +50,10 @@ export default function Layout({ children, title }: LayoutProps) {
         </div>
       </div>
 
+<<<<<<< HEAD
       {/* Desktop sidebar */}
+=======
+>>>>>>> dfea00d (tambahkan)
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-1 bg-white border-r border-gray-200">
           <div className="flex h-16 items-center px-4">
@@ -68,9 +74,13 @@ export default function Layout({ children, title }: LayoutProps) {
         </div>
       </div>
 
+<<<<<<< HEAD
       {/* Main content */}
       <div className="lg:pl-64">
         {/* Top navigation */}
+=======
+      <div className="lg:pl-64">
+>>>>>>> dfea00d (tambahkan)
         <div className="sticky top-0 z-40 bg-white border-b border-gray-200">
           <div className="flex h-16 items-center justify-between px-4">
             <button
@@ -93,7 +103,10 @@ export default function Layout({ children, title }: LayoutProps) {
           </div>
         </div>
 
+<<<<<<< HEAD
         {/* Page content */}
+=======
+>>>>>>> dfea00d (tambahkan)
         <main className="p-6">
           {children}
         </main>

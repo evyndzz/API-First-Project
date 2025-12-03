@@ -2,6 +2,7 @@ import { Logger } from '@adonisjs/core/logger'
 import { HttpContext } from '@adonisjs/core/http'
 import { NextFn } from '@adonisjs/core/types/http'
 
+<<<<<<< HEAD
 /**
  * The container bindings middleware binds classes to their request
  * specific value using the container resolver.
@@ -9,6 +10,8 @@ import { NextFn } from '@adonisjs/core/types/http'
  * - We bind "HttpContext" class to the "ctx" object
  * - And bind "Logger" class to the "ctx.logger" object
  */
+=======
+>>>>>>> dfea00d (tambahkan)
 export default class ContainerBindingsMiddleware {
   handle(ctx: HttpContext, next: NextFn) {
     ctx.containerResolver.bindValue(HttpContext, ctx)

@@ -49,3 +49,8 @@ const shieldConfig = defineConfig({
 })
 
 export default shieldConfig
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> dfea00d (tambahkan)

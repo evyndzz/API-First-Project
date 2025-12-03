@@ -6,13 +6,20 @@ import Supplier from '#models/supplier'
 
 export default class extends BaseSeeder {
   async run() {
+<<<<<<< HEAD
     // Clear existing data
+=======
+   
+>>>>>>> dfea00d (tambahkan)
     await Transaction.query().delete()
     await Product.query().delete()
     await Category.query().delete()
     await Supplier.query().delete()
 
+<<<<<<< HEAD
     // Create suppliers first
+=======
+>>>>>>> dfea00d (tambahkan)
     const suppliers = await Supplier.createMany([
       {
         nama: 'PT. Tech Solutions Indonesia',
@@ -34,7 +41,11 @@ export default class extends BaseSeeder {
       }
     ])
 
+<<<<<<< HEAD
     // Create categories
+=======
+ 
+>>>>>>> dfea00d (tambahkan)
     const categories = await Category.createMany([
       { nama: 'Electronics' },
       { nama: 'Clothing' },
@@ -42,7 +53,11 @@ export default class extends BaseSeeder {
       { nama: 'Accessories' }
     ])
 
+<<<<<<< HEAD
     // Create products
+=======
+
+>>>>>>> dfea00d (tambahkan)
     const products = await Product.createMany([
       {
         nama: 'MacBook Pro M2',
@@ -71,7 +86,11 @@ export default class extends BaseSeeder {
       {
         nama: 'Cotton T-Shirt',
         merk: 'Uniqlo',
+<<<<<<< HEAD
         stok: 5, // Low stock
+=======
+        stok: 5, 
+>>>>>>> dfea00d (tambahkan)
         harga: 150000,
         kategori_id: categories[1].id,
         supplier_id: suppliers[1].id
@@ -79,7 +98,11 @@ export default class extends BaseSeeder {
       {
         nama: 'Denim Jeans',
         merk: 'Levis',
+<<<<<<< HEAD
         stok: 8, // Low stock
+=======
+        stok: 8, 
+>>>>>>> dfea00d (tambahkan)
         harga: 800000,
         kategori_id: categories[1].id,
         supplier_id: suppliers[1].id
@@ -95,14 +118,21 @@ export default class extends BaseSeeder {
       {
         nama: 'React Handbook',
         merk: 'Packt',
+<<<<<<< HEAD
         stok: 7, // Low stock
+=======
+        stok: 7, 
+>>>>>>> dfea00d (tambahkan)
         harga: 300000,
         kategori_id: categories[2].id,
         supplier_id: suppliers[2].id
       }
     ])
 
+<<<<<<< HEAD
     // Create transactions (including today's transactions)
+=======
+>>>>>>> dfea00d (tambahkan)
     const today = new Date()
     const yesterday = new Date(today)
     yesterday.setDate(yesterday.getDate() - 1)
@@ -110,7 +140,10 @@ export default class extends BaseSeeder {
     lastWeek.setDate(lastWeek.getDate() - 7)
 
     await Transaction.createMany([
+<<<<<<< HEAD
       // Today's transactions
+=======
+>>>>>>> dfea00d (tambahkan)
       {
         tipe: 'masuk',
         jumlah: 5,
@@ -135,7 +168,10 @@ export default class extends BaseSeeder {
         created_at: today.toISOString(),
         updated_at: today.toISOString()
       },
+<<<<<<< HEAD
       // Yesterday's transactions
+=======
+>>>>>>> dfea00d (tambahkan)
       {
         tipe: 'keluar',
         jumlah: 3,
@@ -152,7 +188,11 @@ export default class extends BaseSeeder {
         created_at: yesterday.toISOString(),
         updated_at: yesterday.toISOString()
       },
+<<<<<<< HEAD
       // Last week's transactions
+=======
+
+>>>>>>> dfea00d (tambahkan)
       {
         tipe: 'keluar',
         jumlah: 1,

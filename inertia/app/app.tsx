@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
+=======
+ 
+>>>>>>> dfea00d (tambahkan)
 
 import '../css/app.css';
 import { hydrateRoot } from 'react-dom/client'
@@ -21,8 +25,12 @@ createInertiaApp({
   },
 
   setup({ el, App, props }) {
+<<<<<<< HEAD
     
     hydrateRoot(el, <App {...props} />)
     
+=======
+    hydrateRoot(el, <App {...props} />)
+>>>>>>> dfea00d (tambahkan)
   },
 });

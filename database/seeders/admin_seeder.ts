@@ -4,6 +4,7 @@ import hash from '@adonisjs/core/services/hash'
 
 export default class extends BaseSeeder {
   async run() {
+<<<<<<< HEAD
     // Check if admin user already exists
     const existingAdmin = await User.findBy('email', 'admin@inventaris.com')
     
@@ -13,6 +14,17 @@ export default class extends BaseSeeder {
         fullName: 'Administrator',
         email: 'admin@inventaris.com',
         password: await hash.make('admin123') // Default password: admin123
+=======
+  
+    const existingAdmin = await User.findBy('email', 'admin@inventaris.com')
+    
+    if (!existingAdmin) {
+ 
+      await User.create({
+        fullName: 'Administrator',
+        email: 'admin@inventaris.com',
+        password: await hash.make('admin123')
+>>>>>>> dfea00d (tambahkan)
       })
       
       console.log('✅ Admin user created successfully!')

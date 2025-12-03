@@ -27,7 +27,11 @@ export default function CategoriesIndex({ categories }: Props) {
     e.preventDefault()
     
     if (editingCategory) {
+<<<<<<< HEAD
       // Update existing category
+=======
+  
+>>>>>>> dfea00d (tambahkan)
       put(`/api/categories/${editingCategory.id}`, {
         onSuccess: () => {
           setShowModal(false)
@@ -36,7 +40,11 @@ export default function CategoriesIndex({ categories }: Props) {
         }
       })
     } else {
+<<<<<<< HEAD
       // Create new category
+=======
+  
+>>>>>>> dfea00d (tambahkan)
       post('/api/categories', {
         onSuccess: () => {
           setShowModal(false)
@@ -71,7 +79,10 @@ export default function CategoriesIndex({ categories }: Props) {
       <Head title="Categories" />
       <Layout title="Categories">
         <div className="space-y-6">
+<<<<<<< HEAD
           {/* Header */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-gray-900">Categories</h2>
             <button
@@ -82,7 +93,10 @@ export default function CategoriesIndex({ categories }: Props) {
             </button>
           </div>
 
+<<<<<<< HEAD
           {/* Categories Grid */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {categories.data.map((category) => (
               <div key={category.id} className="bg-white shadow rounded-lg p-6">
@@ -107,7 +121,10 @@ export default function CategoriesIndex({ categories }: Props) {
             ))}
           </div>
 
+<<<<<<< HEAD
           {/* Empty State */}
+=======
+>>>>>>> dfea00d (tambahkan)
           {categories.data.length === 0 && (
             <div className="text-center py-12">
               <span className="text-6xl">📂</span>
@@ -125,7 +142,10 @@ export default function CategoriesIndex({ categories }: Props) {
           )}
         </div>
 
+<<<<<<< HEAD
         {/* Add Category Modal */}
+=======
+>>>>>>> dfea00d (tambahkan)
         {showModal && (
           <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

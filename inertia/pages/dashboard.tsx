@@ -30,7 +30,10 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ stats }: DashboardProps) {
+<<<<<<< HEAD
   // Provide default values if stats is undefined
+=======
+>>>>>>> dfea00d (tambahkan)
   const safeStats = stats || {
     totalProducts: 0,
     totalCategories: 0,
@@ -52,7 +55,10 @@ export default function Dashboard({ stats }: DashboardProps) {
       <Head title="Dashboard" />
       <Layout title="Dashboard">
         <div className="space-y-6">
+<<<<<<< HEAD
           {/* Stats */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {statsData.map((stat) => (
               <div key={stat.name} className="bg-white overflow-hidden shadow rounded-lg">
@@ -79,7 +85,10 @@ export default function Dashboard({ stats }: DashboardProps) {
             ))}
           </div>
 
+<<<<<<< HEAD
           {/* Recent Transactions */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="bg-white shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
@@ -140,7 +149,10 @@ export default function Dashboard({ stats }: DashboardProps) {
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* Products Overview */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="bg-white shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
@@ -206,7 +218,10 @@ export default function Dashboard({ stats }: DashboardProps) {
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* Quick Actions */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="p-5">

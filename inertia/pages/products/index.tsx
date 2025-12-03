@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
+<<<<<<< HEAD
 import { Head, Link, useForm, router } from '@inertiajs/react'
+=======
+import { Head, useForm, router } from '@inertiajs/react'
+>>>>>>> dfea00d (tambahkan)
 import Layout from '../../components/Layout'
 
 interface Product {
@@ -8,7 +12,11 @@ interface Product {
   merk: string
   stok: number
   harga: number
+<<<<<<< HEAD
   kategori_id: number
+=======
+  kategori_id?: number
+>>>>>>> dfea00d (tambahkan)
   category: {
     id: number
     nama: string
@@ -44,20 +52,40 @@ export default function ProductsIndex({ products, categories }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+<<<<<<< HEAD
     
     if (editingProduct) {
       // Update existing product
       put(`/api/products/${editingProduct.id}`, {
         onSuccess: () => {
+=======
+    console.log('Form submitted. Data:', data)
+    console.log('Editing product:', editingProduct)
+
+    if (editingProduct) {
+   
+      console.log('Updating product:', editingProduct.id)
+      put(`/api/products/${editingProduct.id}`, {
+        onSuccess: () => {
+          console.log('Product updated successfully')
+>>>>>>> dfea00d (tambahkan)
           setShowModal(false)
           setEditingProduct(null)
           reset()
         }
       })
     } else {
+<<<<<<< HEAD
       // Create new product
       post('/api/products', {
         onSuccess: () => {
+=======
+   
+      console.log('Creating new product')
+      post('/api/products', {
+        onSuccess: () => {
+          console.log('Product created successfully')
+>>>>>>> dfea00d (tambahkan)
           setShowModal(false)
           reset()
         }
@@ -72,14 +100,30 @@ export default function ProductsIndex({ products, categories }: Props) {
   }
 
   const handleEdit = (product: Product) => {
+<<<<<<< HEAD
     setEditingProduct(product)
+=======
+    console.log('Edit button clicked for product:', product)
+    setEditingProduct(product)
+    
+   
+    reset()
+    
+ 
+>>>>>>> dfea00d (tambahkan)
     setData({
       nama: product.nama,
       merk: product.merk || '',
       stok: product.stok,
       harga: product.harga,
+<<<<<<< HEAD
       kategori_id: product.kategori_id.toString(),
     })
+=======
+      kategori_id: (product.kategori_id ?? product.category?.id ?? '').toString(),
+    })
+    
+>>>>>>> dfea00d (tambahkan)
     setShowModal(true)
   }
 
@@ -99,7 +143,10 @@ export default function ProductsIndex({ products, categories }: Props) {
       <Head title="Products" />
       <Layout title="Products">
         <div className="space-y-6">
+<<<<<<< HEAD
           {/* Header */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-gray-900">Products</h2>
             <button
@@ -110,7 +157,10 @@ export default function ProductsIndex({ products, categories }: Props) {
             </button>
           </div>
 
+<<<<<<< HEAD
           {/* Search */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="max-w-md">
             <input
               type="text"
@@ -121,7 +171,10 @@ export default function ProductsIndex({ products, categories }: Props) {
             />
           </div>
 
+<<<<<<< HEAD
           {/* Products Grid */}
+=======
+>>>>>>> dfea00d (tambahkan)
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
               <div key={product.id} className="bg-white shadow rounded-lg p-6">
@@ -167,7 +220,10 @@ export default function ProductsIndex({ products, categories }: Props) {
             ))}
           </div>
 
+<<<<<<< HEAD
           {/* Empty State */}
+=======
+>>>>>>> dfea00d (tambahkan)
           {filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <span className="text-6xl">📦</span>
@@ -189,7 +245,10 @@ export default function ProductsIndex({ products, categories }: Props) {
           )}
         </div>
 
+<<<<<<< HEAD
         {/* Add Product Modal */}
+=======
+>>>>>>> dfea00d (tambahkan)
         {showModal && (
           <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
