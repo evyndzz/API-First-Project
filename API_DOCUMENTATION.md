@@ -1,531 +1,121 @@
-# 📚 Dokumentasi API - Inventory Management System
+# API Documentation
 
-## 🌐 Base URL
-```
-http://localhost:3333
-```
+## Overview
+API untuk sistem manajemen inventory produk elektronik dengan integrasi Exchange Rate API dan QR Code Generator.
 
-## 🔐 Authentication
+## Authentication
 
 ### Login
-```http
-POST /api/auth/login
-Content-Type: application/json
+**POST** `/api/auth/login`
 
+Request body:
+```json
 {
-  "password": "admin123"
+  "email": "user@example.com",
+  "password": "password123"
 }
 ```
 
-**Response:**
+Response:
 ```json
 {
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
     "id": 1,
-    "fullName": "Administrator",
-    "email": "admin@inventaris.com"
-  },
-  "token": "auth_token_here"
-}
-```
-
-### Logout
-```http
-POST /logout
-```
-
----
-
-## 📦 Products API
-
-### Get All Products
-```http
-GET /api/products?page=1&limit=10
-```
-
-**Response:**
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "nama": "MacBook Pro M2",
-      "merk": "Apple",
-      "stok": 15,
-      "harga": "25000000.00",
-      "kategori_id": 1,
-      "supplier_id": 1,
-      "category": {
-        "id": 1,
-        "nama": "Electronics"
-      }
-    }
-  ],
-  "meta": {
-    "total": 7,
-    "per_page": 10,
-    "current_page": 1,
-    "last_page": 1
+    "email": "user@example.com",
+    "fullName": "User Name",
+    "role": "user",
+    "apiAccess": "read"
   }
 }
 ```
 
-### Create Product
-```http
-POST /api/products
-Content-Type: application/json
+### Get Profile
+**GET** `/api/auth/profile`
 
-{
-  "nama": "iPhone 15 Pro",
-  "merk": "Apple",
-  "stok": 25,
-  "harga": 18000000,
-  "kategori_id": 1,
-  "supplier_id": 1
-}
+Headers:
+```
+Authorization: Bearer {token}
 ```
 
-**Required Fields:**
-- `nama` (string): Nama produk
-- `harga` (number): Harga produk
-- `kategori_id` (number): ID kategori
+## Public API Endpoints
 
-**Optional Fields:**
-- `merk` (string): Merek produk
-- `stok` (number): Jumlah stok (default: 0)
-- `supplier_id` (number): ID supplier
+Semua endpoint di bawah ini memerlukan JWT token di header Authorization.
 
-### Update Product
-```http
-PUT /api/products/{id}
-Content-Type: application/json
+### Products
 
-{
-  "nama": "iPhone 15 Pro Max",
-  "merk": "Apple",
-  "stok": 30,
-  "harga": 20000000,
-  "kategori_id": 1
-}
+#### Get Products List
+**GET** `/api/public/products?currency=USD&page=1&limit=10`
+
+Headers:
+```
+Authorization: Bearer {token}
 ```
 
-### Delete Product
-```http
-DELETE /api/products/{id}
-```
+Response includes:
+- Product data
+- Harga dalam IDR dan mata uang target (USD default)
+- QR Code URL untuk setiap produk
+- Exchange rate yang digunakan
 
-### Get Product by Category
-```http
-GET /api/products/category/{categoryId}
-```
+#### Get Product Detail
+**GET** `/api/public/products/:id?currency=USD`
 
-### Search Products
-```http
-GET /api/products/search?search=iPhone&page=1&limit=10
-```
+### Exchange Rate
 
----
+#### Get Exchange Rate
+**GET** `/api/public/exchange-rate?from=USD&to=IDR`
 
-## 📂 Categories API
+#### Convert Currency
+**GET** `/api/public/exchange-rate/convert?amount=100&from=USD&to=IDR`
 
-### Get All Categories
-```http
-GET /api/categories?page=1&limit=10
-```
+#### Get Available Currencies
+**GET** `/api/public/exchange-rate/currencies`
 
-**Response:**
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "nama": "Electronics",
-      "products": [
-        {
-          "id": 1,
-          "nama": "MacBook Pro M2",
-          "merk": "Apple",
-          "stok": 15,
-          "harga": "25000000.00"
-        }
-      ]
-    }
-  ]
-}
-```
+### Categories
 
-### Create Category
-```http
-POST /api/categories
-Content-Type: application/json
+#### Get Categories List
+**GET** `/api/public/categories`
 
-{
-  "nama": "Electronics"
-}
-```
+## API Access Levels
 
-**Required Fields:**
-- `nama` (string): Nama kategori
+- **all**: Akses penuh ke semua endpoint
+- **read**: Hanya akses read (GET)
+- **none**: Tidak memiliki akses API
 
-### Update Category
-```http
-PUT /api/categories/{id}
-Content-Type: application/json
+## Swagger Documentation
 
-{
-  "nama": "Electronics & Gadgets"
-}
-```
+Swagger JSON specification tersedia di:
+**GET** `/api-docs.json`
 
-### Delete Category
-```http
-DELETE /api/categories/{id}
-```
+Untuk melihat dokumentasi interaktif, gunakan Swagger UI dengan mengakses file JSON tersebut.
 
-### Get Category Stats
-```http
-GET /api/categories/{id}/stats
-```
+## External APIs Used
 
-### Search Categories
-```http
-GET /api/categories/search?search=Electronics&page=1&limit=10
-```
+1. **ExchangeRate-API** (https://api.exchangerate-api.com)
+   - Untuk konversi mata uang
+   - Mendapatkan exchange rate real-time
 
----
+2. **QR Server** (https://api.qrserver.com)
+   - Untuk generate QR code
+   - Digunakan untuk produk dan transaksi
 
-## 📋 Transactions API
+## Test Cases
 
-### Get All Transactions
-```http
-GET /api/transactions?page=1&limit=10&type=masuk
-```
-
-**Response:**
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "produk_id": 1,
-      "tipe": "masuk",
-      "jumlah": 5,
-      "catatan": "Stock masuk dari supplier",
-      "created_at": "2024-01-20T10:00:00.000Z",
-      "updated_at": "2024-01-20T10:00:00.000Z",
-      "product": {
-        "id": 1,
-        "nama": "MacBook Pro M2",
-        "merk": "Apple",
-        "stok": 15,
-        "harga": "25000000.00"
-      }
-    }
-  ]
-}
-```
-
-### Create Transaction
-```http
-POST /api/transactions
-Content-Type: application/json
-
-{
-  "produk_id": 1,
-  "tipe": "masuk",
-  "jumlah": 10,
-  "catatan": "Restock dari supplier"
-}
-```
-
-**Required Fields:**
-- `produk_id` (number): ID produk
-- `tipe` (string): "masuk" atau "keluar"
-- `jumlah` (number): Jumlah transaksi
-
-**Optional Fields:**
-- `catatan` (string): Catatan transaksi
-
-**Validation Rules:**
-- `tipe` harus berupa "masuk" atau "keluar"
-- Untuk transaksi "keluar", stok produk harus mencukupi
-
-### Update Transaction
-```http
-PUT /api/transactions/{id}
-Content-Type: application/json
-
-{
-  "produk_id": 1,
-  "tipe": "keluar",
-  "jumlah": 2,
-  "catatan": "Penjualan ke customer"
-}
-```
-
-### Delete Transaction
-```http
-DELETE /api/transactions/{id}
-```
-
-### Get Transactions by Product
-```http
-GET /api/transactions/product/{productId}
-```
-
-### Get Transaction Stats
-```http
-GET /api/transactions/stats?dateFrom=2024-01-01&dateTo=2024-01-31
-```
-
-**Response:**
-```json
-{
-  "totalTransactions": 15,
-  "masukCount": 8,
-  "keluarCount": 7,
-  "totalMasuk": 50,
-  "totalKeluar": 25,
-  "netChange": 25
-}
-```
-
-### Search Transactions
-```http
-GET /api/transactions/search?search=MacBook&page=1&limit=10
-```
-
----
-
-## 🏢 Suppliers API
-
-### Get All Suppliers
-```http
-GET /api/suppliers?page=1&limit=10
-```
-
-**Response:**
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "nama": "PT. Tech Solutions Indonesia",
-      "alamat": "Jl. Sudirman No. 123, Jakarta Selatan",
-      "telepon": "021-12345678",
-      "email": "info@techsolutions.co.id",
-      "products": [
-        {
-          "id": 1,
-          "nama": "MacBook Pro M2"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### Create Supplier
-```http
-POST /api/suppliers
-Content-Type: application/json
-
-{
-  "nama": "PT. Tech Solutions Indonesia",
-  "alamat": "Jl. Sudirman No. 123, Jakarta Selatan",
-  "telepon": "021-12345678",
-  "email": "info@techsolutions.co.id"
-}
-```
-
-**Required Fields:**
-- `nama` (string): Nama supplier
-
-**Optional Fields:**
-- `alamat` (string): Alamat supplier
-- `telepon` (string): Nomor telepon
-- `email` (string): Email supplier
-
-### Update Supplier
-```http
-PUT /api/suppliers/{id}
-Content-Type: application/json
-
-{
-  "nama": "PT. Tech Solutions Indonesia Updated",
-  "alamat": "Jl. Sudirman No. 456, Jakarta Selatan",
-  "telepon": "021-87654321",
-  "email": "contact@techsolutions.co.id"
-}
-```
-
-### Delete Supplier
-```http
-DELETE /api/suppliers/{id}
-```
-
-### Search Suppliers
-```http
-GET /api/suppliers/search?search=Tech&page=1&limit=10
-```
-
----
-
-## 📊 Dashboard API
-
-### Get Dashboard Statistics
-```http
-GET /dashboard
-```
-
-**Response:**
-```json
-{
-  "stats": {
-    "totalProducts": 7,
-    "totalCategories": 4,
-    "todayTransactions": 3,
-    "lowStockItems": 3,
-    "recentTransactions": [
-      {
-        "id": 1,
-        "tipe": "masuk",
-        "jumlah": 5,
-        "created_at": "2024-01-20T10:00:00.000Z",
-        "product": {
-          "nama": "MacBook Pro M2"
-        }
-      }
-    ],
-    "productsByCategory": [
-      {
-        "id": 1,
-        "nama": "Electronics",
-        "products": [
-          {
-            "id": 1,
-            "nama": "MacBook Pro M2",
-            "merk": "Apple",
-            "stok": 15,
-            "harga": "25000000.00"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
----
-
-## 🔒 Authentication Requirements
-
-Semua endpoint API (kecuali `/api/auth/login` dan `/logout`) memerlukan authentication. Gunakan session-based authentication dengan token yang diperoleh dari login.
-
-## 📝 Error Responses
-
-### Validation Error
-```json
-{
-  "error": "Nama, harga, dan kategori_id harus diisi"
-}
-```
-
-### Not Found Error
-```json
-{
-  "error": "Record not found"
-}
-```
-
-### Stock Insufficient Error
-```json
-{
-  "error": "Stok tidak mencukupi"
-}
-```
-
-### Unauthorized Error
-```json
-{
-  "error": "Unauthorized access"
-}
-```
-
-## 🚀 Common Query Parameters
-
-| Parameter | Type | Description | Default |
-|-----------|------|-------------|---------|
-| `page` | number | Halaman untuk pagination | 1 |
-| `limit` | number | Jumlah item per halaman | 10 |
-| `search` | string | Kata kunci pencarian | - |
-| `type` | string | Filter tipe transaksi ("masuk" atau "keluar") | - |
-| `dateFrom` | string | Tanggal mulai untuk filter (YYYY-MM-DD) | - |
-| `dateTo` | string | Tanggal akhir untuk filter (YYYY-MM-DD) | - |
-
-## 💡 Notes
-
-1. **Harga Format**: Harga disimpan sebagai decimal dengan 2 digit desimal
-2. **Stock Management**: 
-   - Transaksi "keluar" akan mengurangi stock
-   - Transaksi "masuk" akan menambah stock
-   - Sistem akan memvalidasi ketersediaan stock untuk transaksi keluar
-3. **Pagination**: Semua list endpoint mendukung pagination
-4. **Search**: Endpoint search mendukung pencarian berdasarkan nama
-5. **Relationships**: Data diload dengan relasi yang relevan (category, product, supplier)
-6. **Session Management**: Menggunakan session-based authentication
-7. **Error Handling**: Semua endpoint mengembalikan error response yang konsisten
-
-## 🛠️ Development Setup
-
-### Prerequisites
-- Node.js 18+
-- MySQL Database
-- npm atau yarn
-
-### Installation
+Jalankan test dengan:
 ```bash
-cd api4
-npm install
+npm test
 ```
 
-### Environment Setup
-Copy `.env.example` to `.env` dan konfigurasi:
-```env
-NODE_ENV=development
-PORT=3333
-APP_KEY=your-app-key-here
-HOST=0.0.0.0
-LOG_LEVEL=info
-SESSION_DRIVER=cookie
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=
-DB_DATABASE=inventory_db
-```
-
-### Database Setup
-```bash
-# Run migrations
-node ace migration:run
-
-# Seed sample data
-node ace db:seed --files=database/seeders/comprehensive_data_seeder.ts
-```
-
-### Start Development Server
-```bash
-npm run dev
-```
-
-## 📞 Support
-
-Untuk pertanyaan atau dukungan teknis, silakan hubungi tim development.
-
----
-
-**Version**: 1.0.0  
-**Last Updated**: January 2024  
-**Framework**: AdonisJS 6.x  
-**Frontend**: React + Inertia.js
+Test cases mencakup:
+1. API Authentication - Login dan get token
+2. API Authentication - Reject invalid credentials
+3. API Authentication - Reject user without API access
+4. API Authentication - Get profile with valid token
+5. Public API - Get products with exchange rate and QR code
+6. Public API - Get exchange rate
+7. Public API - Convert currency
+8. Public API - Get available currencies
+9. Public API - Reject request without token
+10. Public API - Reject user without API access

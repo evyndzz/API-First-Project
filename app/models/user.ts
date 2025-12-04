@@ -1,4 +1,4 @@
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
 import hash from '@adonisjs/core/services/hash'
 import { DateTime } from 'luxon'
 import jwt from 'jsonwebtoken'
@@ -17,18 +17,18 @@ export default class User extends BaseModel {
   @column({ serializeAs: null })
   declare password: string
 
+  @column()
+  declare role: 'admin' | 'user'
+
+  @column()
+  declare apiAccess: 'all' | 'read' | 'none'
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-<<<<<<< HEAD
-  /**
-   * Hash the password before saving
-   */
-=======
->>>>>>> dfea00d (tambahkan)
   @column()
   get hashedPassword() {
     return this.password
@@ -38,30 +38,26 @@ export default class User extends BaseModel {
     this.password = hash.make(value)
   }
 
-<<<<<<< HEAD
   /**
    * Generate JWT token
    */
-=======
->>>>>>> dfea00d (tambahkan)
   generateToken(): string {
     return jwt.sign(
       { 
         id: this.id, 
         email: this.email,
-        fullName: this.fullName 
+        fullName: this.fullName,
+        role: this.role,
+        apiAccess: this.apiAccess
       },
       env.get('APP_KEY'),
       { expiresIn: '24h' }
     )
   }
 
-<<<<<<< HEAD
   /**
    * Verify JWT token
    */
-=======
->>>>>>> dfea00d (tambahkan)
   static verifyToken(token: string): any {
     try {
       return jwt.verify(token, env.get('APP_KEY'))
@@ -70,12 +66,9 @@ export default class User extends BaseModel {
     }
   }
 
-<<<<<<< HEAD
   /**
    * Verify the password
    */
-=======
->>>>>>> dfea00d (tambahkan)
   static async verifyCredentials(email: string, password: string) {
     const user = await this.findBy('email', email)
     if (!user) {
@@ -88,5 +81,22 @@ export default class User extends BaseModel {
     }
 
     return user
+  }
+
+  /**
+   * Check if user has API access
+   */
+  hasApiAccess(requiredAccess: 'all' | 'read' = 'read'): boolean {
+    if (this.apiAccess === 'none') return false
+    if (this.apiAccess === 'all') return true
+    if (this.apiAccess === 'read' && requiredAccess === 'read') return true
+    return false
+  }
+
+  /**
+   * Check if user is admin
+   */
+  isAdmin(): boolean {
+    return this.role === 'admin'
   }
 }
