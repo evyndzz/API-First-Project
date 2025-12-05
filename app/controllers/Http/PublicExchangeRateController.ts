@@ -14,35 +14,6 @@ const exchangeRateService = new ExchangeRateService()
  *           type: boolean
  *         data:
  *           type: object
- *           properties:
- *             from:
- *               type: string
- *             to:
- *               type: string
- *             rate:
- *               type: number
- *             timestamp:
- *               type: number
- *     CurrencyConversionResponse:
- *       type: object
- *       properties:
- *         success:
- *           type: boolean
- *         data:
- *           type: object
- *           properties:
- *             from:
- *               type: string
- *             to:
- *               type: string
- *             amount:
- *               type: number
- *             convertedAmount:
- *               type: number
- *             rate:
- *               type: number
- *             timestamp:
- *               type: number
  */
 export default class PublicExchangeRateController {
   /**
@@ -52,7 +23,6 @@ export default class PublicExchangeRateController {
    *     tags:
    *       - Public API
    *     summary: Mendapatkan exchange rate antara dua mata uang
-   *     description: Mengembalikan exchange rate dari mata uang sumber ke mata uang target
    *     security:
    *       - bearerAuth: []
    *     parameters:
@@ -61,24 +31,14 @@ export default class PublicExchangeRateController {
    *         schema:
    *           type: string
    *           default: USD
-   *         description: Mata uang sumber
    *       - in: query
    *         name: to
    *         schema:
    *           type: string
    *           default: IDR
-   *         description: Mata uang target
    *     responses:
    *       200:
    *         description: Exchange rate berhasil diambil
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/ExchangeRateResponse'
-   *       400:
-   *         description: Parameter tidak valid
-   *       401:
-   *         description: Unauthorized
    */
   async getExchangeRate({ request, response }: HttpContext) {
     try {
@@ -106,7 +66,6 @@ export default class PublicExchangeRateController {
    *     tags:
    *       - Public API
    *     summary: Konversi jumlah uang dari satu mata uang ke mata uang lain
-   *     description: Mengkonversi jumlah uang dari mata uang sumber ke mata uang target
    *     security:
    *       - bearerAuth: []
    *     parameters:
@@ -115,30 +74,19 @@ export default class PublicExchangeRateController {
    *         required: true
    *         schema:
    *           type: number
-   *         description: Jumlah uang yang akan dikonversi
    *       - in: query
    *         name: from
    *         schema:
    *           type: string
    *           default: USD
-   *         description: Mata uang sumber
    *       - in: query
    *         name: to
    *         schema:
    *           type: string
    *           default: IDR
-   *         description: Mata uang target
    *     responses:
    *       200:
    *         description: Konversi berhasil
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/CurrencyConversionResponse'
-   *       400:
-   *         description: Parameter tidak valid
-   *       401:
-   *         description: Unauthorized
    */
   async convertCurrency({ request, response }: HttpContext) {
     try {
@@ -178,25 +126,11 @@ export default class PublicExchangeRateController {
    *     tags:
    *       - Public API
    *     summary: Mendapatkan daftar mata uang yang tersedia
-   *     description: Mengembalikan daftar semua mata uang yang tersedia untuk konversi
    *     security:
    *       - bearerAuth: []
    *     responses:
    *       200:
    *         description: Daftar mata uang berhasil diambil
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 success:
-   *                   type: boolean
-   *                 data:
-   *                   type: array
-   *                   items:
-   *                     type: string
-   *       401:
-   *         description: Unauthorized
    */
   async getAvailableCurrencies({ response }: HttpContext) {
     try {

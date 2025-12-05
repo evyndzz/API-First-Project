@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Head, Link, useForm, router } from '@inertiajs/react'
+import { Head, useForm, router } from '@inertiajs/react'
 import Layout from '../../components/Layout'
 
 interface Supplier {
@@ -41,11 +41,6 @@ export default function SuppliersIndex({ suppliers, flash }: Props) {
     e.preventDefault()
     
     if (editingSupplier) {
-<<<<<<< HEAD
-      // Update existing supplier
-=======
-    
->>>>>>> dfea00d (tambahkan)
       put(`/api/suppliers/${editingSupplier.id}`, {
         onSuccess: () => {
           setShowModal(false)
@@ -58,11 +53,6 @@ export default function SuppliersIndex({ suppliers, flash }: Props) {
         }
       })
     } else {
-<<<<<<< HEAD
-      // Create new supplier
-=======
-   
->>>>>>> dfea00d (tambahkan)
       post('/api/suppliers', {
         onSuccess: () => {
           setShowModal(false)
@@ -111,10 +101,6 @@ export default function SuppliersIndex({ suppliers, flash }: Props) {
       <Head title="Suppliers" />
       <Layout title="Suppliers">
         <div className="space-y-6">
-<<<<<<< HEAD
-          {/* Header */}
-=======
->>>>>>> dfea00d (tambahkan)
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-gray-900">Suppliers</h2>
             <button
@@ -125,10 +111,6 @@ export default function SuppliersIndex({ suppliers, flash }: Props) {
             </button>
           </div>
 
-<<<<<<< HEAD
-          {/* Suppliers Grid */}
-=======
->>>>>>> dfea00d (tambahkan)
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {suppliers.data.map((supplier) => (
               <div key={supplier.id} className="bg-white shadow rounded-lg p-6">
@@ -166,10 +148,6 @@ export default function SuppliersIndex({ suppliers, flash }: Props) {
             ))}
           </div>
 
-<<<<<<< HEAD
-          {/* Empty State */}
-=======
->>>>>>> dfea00d (tambahkan)
           {suppliers.data.length === 0 && (
             <div className="text-center py-12">
               <span className="text-6xl">🏢</span>
@@ -187,10 +165,6 @@ export default function SuppliersIndex({ suppliers, flash }: Props) {
           )}
         </div>
 
-<<<<<<< HEAD
-        {/* Add/Edit Supplier Modal */}
-=======
->>>>>>> dfea00d (tambahkan)
         {showModal && (
           <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

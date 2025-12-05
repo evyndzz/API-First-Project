@@ -2,6 +2,8 @@
 
 Aplikasi manajemen inventaris berbasis web yang dibangun dengan **AdonisJS** (backend) dan **React** (frontend) menggunakan **Inertia.js** untuk integrasi seamless antara keduanya.
 
+**🔗 Repository**: [https://github.com/evyndzz/API-First-Project](https://github.com/evyndzz/API-First-Project)
+
 ## 📋 Daftar Isi
 1. [Persyaratan Sistem](#persyaratan-sistem)
 2. [Tools & Framework yang Diperlukan](#tools--framework-yang-diperlukan)
@@ -127,14 +129,18 @@ node --version && npm --version && git --version && mysql --version
 ```bash
 # 1. Buka terminal/command prompt di folder yang diinginkan
 # 2. Clone repository
-git clone https://github.com/evyndzz/rpl_final.git
+git clone https://github.com/evyndzz/API-First-Project.git
 
 # 3. Masuk ke folder project
-cd rpl_final
+cd API-First-Project
 
 # 4. Verify folder structure
 # Pastikan ada file: package.json, adonisrc.ts, vite.config.ts, tsconfig.json
 ```
+
+**Note**: 
+- Repository GitHub: https://github.com/evyndzz/API-First-Project
+- Folder lokal development: `D:\api4` (atau sesuai lokasi clone Anda)
 
 ---
 
@@ -228,7 +234,11 @@ node ace db:seed
 
 ```bash
 # Pastikan sudah di dalam folder project
-cd rpl_final
+# Jika clone dari GitHub:
+cd API-First-Project
+
+# Atau jika menggunakan folder lokal (D:\api4):
+cd D:\api4
 
 # Install semua npm dependencies
 npm install
@@ -273,38 +283,65 @@ npm run dev:full
 
 ## 📱 Fitur Aplikasi
 
-### Dashboard
-- Overview statistik inventaris
-- Ringkasan stock terbaru
+### 🎨 User Interface Modern
+- ✨ **Glassmorphism Design**: Desain modern dengan efek blur seperti Apple
+- 🎨 **Gradient Backgrounds**: Background gradient yang menarik (indigo → purple → pink)
+- 🎭 **Smooth Animations**: Animasi fade-in, scale-in, dan hover effects yang halus
+- 📱 **Responsive Design**: Tampilan optimal di desktop, tablet, dan mobile
+- 🎯 **Modern Cards**: Card design dengan shadow dan rounded corners
+- 🌈 **Color Scheme**: Skema warna modern dengan gradient accents
 
-### Manajemen Kategori
-- ✅ Tambah kategori produk
-- ✅ Edit kategori
+### 📊 Dashboard
+- Overview statistik inventaris dengan glassmorphism cards
+- Ringkasan stock terbaru dengan gradient badges
+- Recent transactions table dengan hover effects
+- Products overview dengan color-coded stock status
+- Quick action cards dengan interactive hover
+
+### 📂 Manajemen Kategori
+- ✅ Tambah kategori produk dengan modal glassmorphism
+- ✅ Edit kategori dengan UI modern
 - ✅ Hapus kategori (jika tidak ada produk)
-- ✅ Lihat detail kategori
+- ✅ Lihat detail kategori dengan card design modern
 
-### Manajemen Produk
+### 📦 Manajemen Produk
 - ✅ CRUD (Create, Read, Update, Delete) produk
 - ✅ Kelompokkan berdasarkan kategori
-- ✅ Track stock dan harga
-- ✅ Search produk
+- ✅ Track stock dan harga dengan gradient badges
+- ✅ Search produk dengan glassmorphism input
 - ✅ Filter berdasarkan kategori
+- ✅ Product cards dengan hover effects dan gradient icons
 
-### Manajemen Supplier
+### 🏢 Manajemen Supplier
 - ✅ Tambah/Edit/Hapus supplier
 - ✅ Kelola informasi kontak
 - ✅ Track produk dari supplier tertentu
 
-### Manajemen Transaksi
+### 📋 Manajemen Transaksi
 - ✅ Catat stock masuk (pembelian dari supplier)
 - ✅ Catat stock keluar (penjualan/penggunaan)
 - ✅ Filter transaksi berdasarkan tipe
 - ✅ View riwayat transaksi
+- ✅ **Email Notification Otomatis**: Notifikasi email saat transaksi baru atau stok menipis
 
-### Authentication
-- ✅ Login/Logout
+### 💱 Exchange Rate Converter
+- ✅ Konversi mata uang real-time menggunakan ExchangeRate-API
+- ✅ Konversi harga produk ke berbagai mata uang
+- ✅ Manual currency conversion dengan format yang benar
+- ✅ Daftar mata uang lengkap dengan nama negara
+
+### 📧 Email Notification System
+- ✅ Notifikasi email otomatis untuk transaksi baru
+- ✅ Notifikasi email otomatis saat stok menipis
+- ✅ Manual email notification untuk low stock products
+- ✅ Manual email notification untuk recent transactions
+- ✅ Menggunakan Resend API untuk pengiriman email
+
+### 🔐 Authentication
+- ✅ Login/Logout dengan UI modern
 - ✅ Session management
 - ✅ Protected routes
+- ✅ Password-only login untuk UI
 
 ---
 
@@ -326,7 +363,7 @@ npm run dev:full
 ## 📂 Struktur Folder Project
 
 ```
-rpl_final/
+API-First-Project/  # atau D:\api4 (folder lokal development)
 ├── app/
 │   ├── controllers/
 │   │   └── Http/              # API Controllers (Products, Categories, etc)
@@ -367,12 +404,18 @@ rpl_final/
 
 Jika Anda menjalankan seeder:
 ```bash
-node ace db:seed
+# Jalankan admin seeder
+node ace db:seed --files=database/seeders/admin_seeder.ts
+
+# Jalankan comprehensive data seeder (opsional)
+node ace db:seed --files=database/seeders/comprehensive_data_seeder.ts
 ```
 
 Gunakan kredensial berikut untuk login:
-- **Email**: admin@example.com
-- **Password**: password
+- **Email**: admin@inventaris.com
+- **Password**: admin123
+- **Role**: admin
+- **API Access**: all (full access)
 
 **⚠️ Security Note**: Jangan gunakan kredensial default di production. Ubah password setelah first login.
 
@@ -451,7 +494,69 @@ Gunakan kredensial berikut untuk login:
 
 ---
 
+## 🌐 API Publik yang Digunakan
+
+Aplikasi ini menggunakan **3 API publik** untuk berbagai fitur:
+
+### 1. Exchange Rate API
+- **Nama**: ExchangeRate-API
+- **URL**: `https://api.exchangerate-api.com/v4/latest`
+- **Fungsi**: Konversi mata uang dan mendapatkan kurs real-time
+- **Digunakan untuk**: 
+  - Konversi harga produk ke berbagai mata uang
+  - Menampilkan exchange rate di halaman Exchange Rate
+  - Konversi manual mata uang
+- **Dokumentasi**: https://www.exchangerate-api.com/
+- **Gratis**: Ya (tanpa API key untuk tier gratis)
+
+### 2. QR Code Generator API
+- **Nama**: QR Server API
+- **URL**: `https://api.qrserver.com/v1/create-qr-code`
+- **Fungsi**: Generate QR code untuk produk dan transaksi
+- **Digunakan untuk**: 
+  - Generate QR code untuk produk di Public API
+  - Tracking produk melalui QR code
+- **Dokumentasi**: https://goqr.me/api/
+- **Gratis**: Ya (tanpa API key)
+
+### 3. Resend Email API
+- **Nama**: Resend API
+- **URL**: `https://api.resend.com/emails`
+- **Fungsi**: Mengirim email notification
+- **Digunakan untuk**: 
+  - Email otomatis saat transaksi baru
+  - Email notifikasi saat stok menipis
+  - Email notification manual dari UI
+- **Dokumentasi**: https://resend.com/docs
+- **Gratis**: Ya (3,000 email/bulan)
+- **Setup**: Perlu API key dari https://resend.com
+
+### Konfigurasi API
+
+Tambahkan ke file `.env`:
+
+```env
+# Resend Email API Configuration
+RESEND_API_KEY=re_your_api_key_here
+RESEND_FROM_EMAIL=noreply@yourdomain.com
+ADMIN_EMAIL=admin@inventaris.com
+LOW_STOCK_THRESHOLD=10
+```
+
+**Cara mendapatkan Resend API Key:**
+1. Daftar di https://resend.com
+2. Buat API key di dashboard
+3. Verifikasi domain email (untuk production) atau gunakan `onboarding@resend.dev` untuk testing
+4. Copy API key ke `.env`
+
+---
+
 ## 📚 Dokumentasi Lengkap
+
+### API Documentation
+- **OpenAPI/Swagger**: Akses di `http://localhost:3333/api-docs.json`
+- **API Documentation**: Lihat file `API_DOCUMENTATION.md` untuk dokumentasi lengkap
+- **Postman Collection**: Import `POSTMAN_COLLECTION.json` untuk testing API
 
 ### Framework Documentation
 - **AdonisJS**: https://docs.adonisjs.com/
@@ -463,6 +568,10 @@ Gunakan kredensial berikut untuk login:
 - **Vite**: https://vitejs.dev/guide/
 - **TypeScript**: https://www.typescriptlang.org/docs/
 - **Lucid ORM**: https://docs.adonisjs.com/guides/models/introduction
+
+### Public APIs Documentation
+- **ExchangeRate-API**: https://www.exchangerate-api.com/
+- **Resend Email API**: https://resend.com/docs
 
 ---
 
@@ -487,8 +596,15 @@ Project ini menggunakan MIT License. Silakan gunakan sesuai kebutuhan Anda.
 
 Jika ada pertanyaan atau butuh bantuan:
 - Email: putukelvin70@gmail.com
-- GitHub Repository: https://github.com/evyndzz/rpl_final
-- GitHub Issues: https://github.com/evyndzz/rpl_final/issues
+- GitHub Repository: https://github.com/evyndzz/API-First-Project
+- GitHub Issues: https://github.com/evyndzz/API-First-Project/issues
+
+## 📦 Repository Information
+
+- **GitHub Repository**: [https://github.com/evyndzz/API-First-Project](https://github.com/evyndzz/API-First-Project)
+- **Folder Lokal Development**: `D:\api4` (atau sesuai lokasi clone Anda)
+- **Project Name**: API-First-Project
+- **Description**: Inventory Management System dengan API-First Architecture
 
 ---
 
@@ -496,5 +612,31 @@ Jika ada pertanyaan atau butuh bantuan:
 
 Aplikasi sudah siap dijalankan. Nikmati pengembangan! 🚀
 
-**Last Updated**: December 2025
-**Version**: 1.0.0
+## 🎨 Teknologi UI/UX
+
+### Design System
+- **Glassmorphism**: Efek blur dan transparansi modern
+- **Gradient Design**: Skema warna dengan gradient (indigo, purple, pink)
+- **Smooth Animations**: CSS animations untuk fade-in, scale-in, hover effects
+- **Custom Scrollbar**: Scrollbar dengan gradient design
+- **Responsive Layout**: Mobile-first approach dengan Tailwind CSS
+
+### Komponen UI
+- **Glass Cards**: Cards dengan backdrop-filter blur
+- **Gradient Buttons**: Buttons dengan gradient backgrounds
+- **Modern Modals**: Modal dengan glassmorphism dan backdrop blur
+- **Toast Notifications**: Success toast dengan glassmorphism design
+- **Interactive Elements**: Hover effects dan transitions yang halus
+
+### CSS Features
+- Custom animations (fade-in, scale-in, blob)
+- Glassmorphism utilities (`.glass`, `.glass-dark`)
+- Gradient utilities (`.bg-gradient-primary`, `.bg-gradient-secondary`)
+- Card hover effects (`.card-hover`)
+- Custom scrollbar styling
+
+---
+
+**Last Updated**: December 2025  
+**Version**: 2.0.0  
+**UI Version**: Modern Glassmorphism Design

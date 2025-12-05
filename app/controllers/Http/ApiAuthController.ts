@@ -68,6 +68,8 @@ export default class ApiAuthController {
    *               $ref: '#/components/schemas/ApiLoginResponse'
    *       401:
    *         description: Kredensial tidak valid
+   *       403:
+   *         description: User tidak memiliki akses API
    */
   async login({ request, response }: HttpContext) {
     try {

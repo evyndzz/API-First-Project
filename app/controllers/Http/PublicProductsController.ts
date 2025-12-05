@@ -29,18 +29,6 @@ const qrCodeService = new QRCodeService()
  *           type: string
  *         kategori:
  *           type: object
- *           properties:
- *             id:
- *               type: number
- *             nama:
- *               type: string
- *         supplier:
- *           type: object
- *           properties:
- *             id:
- *               type: number
- *             nama:
- *               type: string
  */
 export default class PublicProductsController {
   /**
@@ -65,29 +53,9 @@ export default class PublicProductsController {
    *         schema:
    *           type: integer
    *           default: 1
-   *         description: Nomor halaman
-   *       - in: query
-   *         name: limit
-   *         schema:
-   *           type: integer
-   *           default: 10
-   *         description: Jumlah item per halaman
    *     responses:
    *       200:
    *         description: Daftar produk berhasil diambil
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 success:
-   *                   type: boolean
-   *                 data:
-   *                   type: array
-   *                   items:
-   *                     $ref: '#/components/schemas/PublicProduct'
-   *                 meta:
-   *                   type: object
    *       401:
    *         description: Unauthorized
    */
@@ -117,7 +85,7 @@ export default class PublicProductsController {
             nama: product.nama,
             merk: product.merk,
             stok: product.stok,
-            harga: product.harga, // IDR
+            harga: product.harga,
             harga_usd: parseFloat(hargaInTargetCurrency.toFixed(2)),
             currency: currency,
             exchange_rate: parseFloat(exchangeRate.rate.toFixed(4)),
@@ -159,7 +127,6 @@ export default class PublicProductsController {
    *     tags:
    *       - Public API
    *     summary: Mendapatkan detail produk dengan konversi mata uang dan QR code
-   *     description: Mengembalikan detail produk dengan harga dalam IDR dan USD, serta QR code
    *     security:
    *       - bearerAuth: []
    *     parameters:
@@ -168,29 +135,11 @@ export default class PublicProductsController {
    *         required: true
    *         schema:
    *           type: integer
-   *         description: ID produk
-   *       - in: query
-   *         name: currency
-   *         schema:
-   *           type: string
-   *           default: USD
-   *         description: Mata uang target untuk konversi harga
    *     responses:
    *       200:
    *         description: Detail produk berhasil diambil
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 success:
-   *                   type: boolean
-   *                 data:
-   *                   $ref: '#/components/schemas/PublicProduct'
    *       404:
    *         description: Produk tidak ditemukan
-   *       401:
-   *         description: Unauthorized
    */
   async show({ params, request, response }: HttpContext) {
     try {
@@ -202,7 +151,6 @@ export default class PublicProductsController {
         .preload('supplier')
         .firstOrFail()
 
-      // Get exchange rate
       const exchangeRate = await exchangeRateService.getExchangeRate('IDR', currency)
       const hargaInTargetCurrency = product.harga / exchangeRate.rate
       const qrCodeUrl = qrCodeService.generateProductQRCode(product.id, product.nama)
@@ -214,7 +162,7 @@ export default class PublicProductsController {
           nama: product.nama,
           merk: product.merk,
           stok: product.stok,
-          harga: product.harga, // IDR
+          harga: product.harga,
           harga_usd: parseFloat(hargaInTargetCurrency.toFixed(2)),
           currency: currency,
           exchange_rate: parseFloat(exchangeRate.rate.toFixed(4)),
@@ -227,6 +175,110 @@ export default class PublicProductsController {
             id: product.supplier.id,
             nama: product.supplier.nama
           } : null
+        }
+      })
+    } catch (error: any) {
+      return response.status(404).json({
+        success: false,
+        message: 'Produk tidak ditemukan'
+      })
+    }
+  }
+
+  /**
+   * @swagger
+   * /api/public/products/{id}/qr-code:
+   *   get:
+   *     tags:
+   *       - Public API
+   *     summary: Generate QR code untuk produk
+   *     security:
+   *       - bearerAuth: []
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: integer
+   *       - in: query
+   *         name: size
+   *         schema:
+   *           type: integer
+   *           default: 300
+   *     responses:
+   *       200:
+   *         description: QR code berhasil di-generate
+   *       404:
+   *         description: Produk tidak ditemukan
+   */
+  async generateQrCode({ params, request, response }: HttpContext) {
+    try {
+      const product = await Product.findOrFail(params.id)
+      const size = request.input('size', 300)
+
+      const qrCodeUrl = qrCodeService.generateProductQRCode(product.id, product.nama)
+
+      return response.json({
+        success: true,
+        data: {
+          product_id: product.id,
+          product_name: product.nama,
+          qr_code_url: qrCodeUrl,
+          size: size
+        }
+      })
+    } catch (error: any) {
+      return response.status(404).json({
+        success: false,
+        message: 'Produk tidak ditemukan'
+      })
+    }
+  }
+
+  /**
+   * @swagger
+   * /api/public/products/{id}/convert-price:
+   *   get:
+   *     tags:
+   *       - Public API
+   *     summary: Konversi harga produk ke mata uang lain
+   *     security:
+   *       - bearerAuth: []
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: integer
+   *       - in: query
+   *         name: currency
+   *         schema:
+   *           type: string
+   *           default: USD
+   *     responses:
+   *       200:
+   *         description: Konversi harga berhasil
+   *       404:
+   *         description: Produk tidak ditemukan
+   */
+  async convertPrice({ params, request, response }: HttpContext) {
+    try {
+      const product = await Product.findOrFail(params.id)
+      const currency = request.input('currency', 'USD')
+
+      const exchangeRate = await exchangeRateService.getExchangeRate('IDR', currency)
+      const hargaInTargetCurrency = product.harga / exchangeRate.rate
+
+      return response.json({
+        success: true,
+        data: {
+          product_id: product.id,
+          product_name: product.nama,
+          original_price: product.harga,
+          original_currency: 'IDR',
+          converted_price: parseFloat(hargaInTargetCurrency.toFixed(2)),
+          target_currency: currency,
+          exchange_rate: parseFloat(exchangeRate.rate.toFixed(4))
         }
       })
     } catch (error: any) {

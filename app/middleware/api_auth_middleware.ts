@@ -31,7 +31,7 @@ export default class ApiAuthMiddleware {
         }
 
         // Attach user to context
-        ctx.authUser = user as any
+        (ctx as any).authUser = user
         
         await next()
       } catch (error) {

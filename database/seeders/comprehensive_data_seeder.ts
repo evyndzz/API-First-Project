@@ -314,9 +314,9 @@ export default class extends BaseSeeder {
       tipe: 'masuk',
       jumlah: 5,
       catatan: 'Stock masuk iPhone 15 Pro dari supplier',
-      produk_id: products[6].id
+      produk_id: products[6].id,
+      supplier_id: suppliers[0].id
     })
-    ;(t1 as any).supplier_id = suppliers[0].id
     t1.merge({ created_at: today, updated_at: today })
     await t1.save()
     
@@ -333,9 +333,9 @@ export default class extends BaseSeeder {
       tipe: 'masuk',
       jumlah: 10,
       catatan: 'Restock Samsung Galaxy S24',
-      produk_id: products[8].id
+      produk_id: products[8].id,
+      supplier_id: suppliers[1].id
     })
-    ;(t3 as any).supplier_id = suppliers[1].id
     t3.merge({ created_at: today, updated_at: today })
     await t3.save()
     
@@ -353,9 +353,9 @@ export default class extends BaseSeeder {
       tipe: 'masuk',
       jumlah: 8,
       catatan: 'Stock masuk PlayStation 5',
-      produk_id: products[19].id
+      produk_id: products[19].id,
+      supplier_id: suppliers[2].id
     })
-    ;(t5 as any).supplier_id = suppliers[2].id
     t5.merge({ created_at: yesterday, updated_at: yesterday })
     await t5.save()
     
@@ -372,9 +372,9 @@ export default class extends BaseSeeder {
       tipe: 'masuk',
       jumlah: 15,
       catatan: 'Bulk order Anker Power Bank',
-      produk_id: products[29].id
+      produk_id: products[29].id,
+      supplier_id: suppliers[2].id
     })
-    ;(t7 as any).supplier_id = suppliers[2].id
     t7.merge({ created_at: yesterday, updated_at: yesterday })
     await t7.save()
     
@@ -392,9 +392,9 @@ export default class extends BaseSeeder {
       tipe: 'masuk',
       jumlah: 5,
       catatan: 'Stock masuk Sony WH-1000XM5',
-      produk_id: products[13].id
+      produk_id: products[13].id,
+      supplier_id: suppliers[2].id
     })
-    ;(t9 as any).supplier_id = suppliers[2].id
     t9.merge({ created_at: lastWeek, updated_at: lastWeek })
     await t9.save()
     

@@ -4,7 +4,7 @@ export class ExchangeRateService {
   private baseUrl = 'https://api.exchangerate-api.com/v4/latest'
 
   /**
-   * Get exchange rate from USD to target currency
+   * Get exchange rate from one currency to another
    */
   async getExchangeRate(from: string = 'USD', to: string = 'IDR'): Promise<{
     from: string

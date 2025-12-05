@@ -1,6 +1,6 @@
 import router from '@adonisjs/core/services/router'
 
-// Public routes (tidak perlu authentication)
+// Public routes
 router.get('/', async ({ inertia }) => {
   return inertia.render('home')
 })
@@ -9,15 +9,11 @@ router.get('/login', async ({ inertia }) => {
   return inertia.render('login')
 })
 
-// Authentication routes (public)
-router.group(() => {
-  router.post('/login', '#controllers/Http/AuthController.login')
-}).prefix('/api/auth')
-
-// Logout route (public)
+// Web Authentication routes (public)
+router.post('/login', '#controllers/Http/AuthController.login')
 router.post('/logout', '#controllers/Http/AuthController.logout')
 
-// Protected UI routes (membutuhkan authentication)
+// Protected UI routes
 router.group(() => {
   router.get('/dashboard', async (ctx) => {
     const { inertia, session, response } = ctx
@@ -165,6 +161,28 @@ router.group(() => {
       } : undefined
     })
   })
+  
+  router.get('/exchange-rate', async ({ inertia, session, response }) => {
+    const authToken = session.get('auth_token')
+    const user = session.get('user')
+    
+    if (!authToken || !user) {
+      return response.redirect('/login')
+    }
+    
+    return inertia.render('exchange-rate')
+  })
+  
+  router.get('/email-notification', async ({ inertia, session, response }) => {
+    const authToken = session.get('auth_token')
+    const user = session.get('user')
+    
+    if (!authToken || !user) {
+      return response.redirect('/login')
+    }
+    
+    return inertia.render('email-notification')
+  })
 })
 
 // API Authentication routes (public)
@@ -179,7 +197,6 @@ router.get('/api-docs.json', '#controllers/Http/SwaggerController.index')
 
 // Public API routes (protected dengan JWT)
 router.group(() => {
-  // Products with external API integration
   router.get('/products', '#controllers/Http/PublicProductsController.index')
     .use('#middleware/api_auth_middleware')
     .use('#middleware/api_access_middleware')
@@ -187,12 +204,10 @@ router.group(() => {
     .use('#middleware/api_auth_middleware')
     .use('#middleware/api_access_middleware')
   
-  // Categories
   router.get('/categories', '#controllers/Http/PublicCategoriesController.index')
     .use('#middleware/api_auth_middleware')
     .use('#middleware/api_access_middleware')
   
-  // Exchange Rate API
   router.get('/exchange-rate', '#controllers/Http/PublicExchangeRateController.getExchangeRate')
     .use('#middleware/api_auth_middleware')
     .use('#middleware/api_access_middleware')
@@ -200,6 +215,13 @@ router.group(() => {
     .use('#middleware/api_auth_middleware')
     .use('#middleware/api_access_middleware')
   router.get('/exchange-rate/currencies', '#controllers/Http/PublicExchangeRateController.getAvailableCurrencies')
+    .use('#middleware/api_auth_middleware')
+    .use('#middleware/api_access_middleware')
+  
+  router.get('/products/:id/qr-code', '#controllers/Http/PublicProductsController.generateQrCode')
+    .use('#middleware/api_auth_middleware')
+    .use('#middleware/api_access_middleware')
+  router.get('/products/:id/convert-price', '#controllers/Http/PublicProductsController.convertPrice')
     .use('#middleware/api_auth_middleware')
     .use('#middleware/api_access_middleware')
 }).prefix('/api/public')
@@ -241,3 +263,30 @@ router.group(() => {
   router.delete('/suppliers/:id', '#controllers/Http/SuppliersController.destroy')
   router.get('/suppliers/search', '#controllers/Http/SuppliersController.search')
 }).prefix('/api')
+
+// UI API routes (protected dengan session, tidak perlu JWT)
+router.group(() => {
+  router.get('/exchange-rate', '#controllers/Http/UiExchangeRateController.getExchangeRate')
+  router.get('/exchange-rate/convert', '#controllers/Http/UiExchangeRateController.convertCurrency')
+  router.get('/exchange-rate/currencies', '#controllers/Http/UiExchangeRateController.getAvailableCurrencies')
+  router.get('/exchange-rate/products', '#controllers/Http/UiExchangeRateController.getProducts')
+  router.get('/exchange-rate/products/convert', '#controllers/Http/UiExchangeRateController.convertProductPrice')
+  
+  router.get('/email-notification/low-stock', '#controllers/Http/EmailNotificationController.getLowStockProducts')
+  router.post('/email-notification/low-stock/send', '#controllers/Http/EmailNotificationController.sendLowStockNotification')
+  router.get('/email-notification/transactions', '#controllers/Http/EmailNotificationController.getRecentTransactions')
+  router.post('/email-notification/transactions/:id/send', '#controllers/Http/EmailNotificationController.sendTransactionNotification')
+}).prefix('/api/ui').use(async (ctx, next) => {
+  const { session, response } = ctx
+  const authToken = session.get('auth_token')
+  const user = session.get('user')
+  
+  if (!authToken || !user) {
+    return response.unauthorized({
+      success: false,
+      message: 'Unauthorized - Please login first'
+    })
+  }
+  
+  await next()
+})

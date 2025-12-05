@@ -5,12 +5,9 @@
     "module": "ESNext",
     "jsx": "react-jsx",
     "paths": {
-      "~/*": ["./*"],
+      "~/*": ["./*"]
     },
-<<<<<<< HEAD
-=======
     "ignoreDeprecations": "6.0"
->>>>>>> dfea00d (tambahkan)
   },
-  "include": ["./**/*.ts", "./**/*.tsx"],
+  "include": ["./**/*.ts", "./**/*.tsx"]
 }
