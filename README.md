@@ -586,12 +586,6 @@ Jika menemukan bug atau ingin menambah fitur:
 
 ---
 
-## 📝 Lisensi
-
-Project ini menggunakan MIT License. Silakan gunakan sesuai kebutuhan Anda.
-
----
-
 ## 📞 Contact & Support
 
 Jika ada pertanyaan atau butuh bantuan:
@@ -610,32 +604,6 @@ Jika ada pertanyaan atau butuh bantuan:
 
 ## 🎉 Selamat!
 
-Aplikasi sudah siap dijalankan. Nikmati pengembangan! 🚀
-
-## 🎨 Teknologi UI/UX
-
-### Design System
-- **Glassmorphism**: Efek blur dan transparansi modern
-- **Gradient Design**: Skema warna dengan gradient (indigo, purple, pink)
-- **Smooth Animations**: CSS animations untuk fade-in, scale-in, hover effects
-- **Custom Scrollbar**: Scrollbar dengan gradient design
-- **Responsive Layout**: Mobile-first approach dengan Tailwind CSS
-
-### Komponen UI
-- **Glass Cards**: Cards dengan backdrop-filter blur
-- **Gradient Buttons**: Buttons dengan gradient backgrounds
-- **Modern Modals**: Modal dengan glassmorphism dan backdrop blur
-- **Toast Notifications**: Success toast dengan glassmorphism design
-- **Interactive Elements**: Hover effects dan transitions yang halus
-
-### CSS Features
-- Custom animations (fade-in, scale-in, blob)
-- Glassmorphism utilities (`.glass`, `.glass-dark`)
-- Gradient utilities (`.bg-gradient-primary`, `.bg-gradient-secondary`)
-- Card hover effects (`.card-hover`)
-- Custom scrollbar styling
-
----
 
 **Last Updated**: December 2025  
 **Version**: 2.0.0  
